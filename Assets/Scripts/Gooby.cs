@@ -5,7 +5,9 @@ using UnityEngine;
 public class Gooby : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 1f;
+    [SerializeField] float size = 1f;
     Rigidbody2D rb2d;
+    
 
     void Start()
     {
@@ -37,6 +39,6 @@ public class Gooby : MonoBehaviour
 
     void FlipEnemyFace()
     {
-        transform.localScale = new Vector2(-(Mathf.Sign(rb2d.velocity.x)), 1f);
+        transform.localScale = size * new Vector2(-(Mathf.Sign(rb2d.velocity.x)), 1f);
     }
 }

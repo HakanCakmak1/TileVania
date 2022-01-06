@@ -20,8 +20,8 @@ TagManager:
   - Enemy
   - Hazard
   - Exit
-  - 
-  - 
+  - Fire
+  - Coin
   - 
   - 
   - 
@@ -63,9 +63,18 @@ TagManager:
   - name: Hazard
     uniqueID: 108036523
     locked: 0
+  - name: Coin
+    uniqueID: 309515987
+    locked: 0
   - name: Enemies
     uniqueID: 1113236217
     locked: 0
   - name: Player
     uniqueID: 3508429473
+    locked: 0
+  - name: Fire
+    uniqueID: 2020406457
+    locked: 0
+  - name: UI
+    uniqueID: 787119247
     locked: 0

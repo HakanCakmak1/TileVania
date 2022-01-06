@@ -9,6 +9,10 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField] float climbingSpeed = 10f;
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] float secondJumpSpeed = 10f;
+    [SerializeField] GameObject fire;
+    [SerializeField] Transform hand;
+    [SerializeField] AudioClip fireSfx;
+    [SerializeField] AudioClip deathSfx;
 
     Vector2 moveInput;
     Rigidbody2D rigidBody;
@@ -43,7 +47,6 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (!isAlive) {return;} 
         moveInput = value.Get<Vector2>();
-        Debug.Log(moveInput);
     }
 
     void OnJump(InputValue value)
@@ -66,6 +69,27 @@ public class PlayerMovementScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!isAlive) {return;} 
+        if (value.isPressed)
+        {
+            if (FindObjectOfType<GameSesion>().ThrowFire())
+            {
+                Instantiate(fire, hand.position, hand.rotation);
+                AudioSource.PlayClipAtPoint(fireSfx, Camera.main.transform.position);
+            }
+        }
+    }
+
+    void OnEscape(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            Application.Quit();
+        }       
     }
 
     void Run()
@@ -161,7 +185,9 @@ public class PlayerMovementScript : MonoBehaviour
         if (bPlayerCollider.IsTouchingLayers(LayerMask.GetMask("Enemy","Hazard")) || playerCollider.IsTouchingLayers(LayerMask.GetMask("Enemy","Hazard")))
         {
             isAlive = false;
+            AudioSource.PlayClipAtPoint(deathSfx, Camera.main.transform.position);
             Kill();
+            FindObjectOfType<GameSesion>().DoOnDeath();
             rigidBody.velocity = new Vector2(Random.Range(-15f, 15f), Random.Range(10f, 20f));
         }
     }
